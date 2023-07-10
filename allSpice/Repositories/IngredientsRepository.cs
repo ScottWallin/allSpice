@@ -11,15 +11,37 @@ public class IngredientsRepository
   {
     string sql = @"
     INSERT INTO ingredients
-    (id, name, quantity, recipeId)
+    (name, quantity, recipeId)
     VALUES
-    (@id, @name, @quantity, @recipeId);
+    (@name, @quantity, @recipeId);
     
     SELECT
     *
     FROM ingredients
     WHERE id = LAST_INSERT_ID();";
     Ingredient ingredient = _db.Query<Ingredient>(sql, ingredientData).FirstOrDefault();
+    return ingredient;
+  }
+  internal List<Ingredient> GetIngredientsByRecipeId(int recipeId)
+  {
+    string sql = @"
+    SELECT
+    *
+    FROM ingredients
+    WHERE recipeId = @recipeId
+    ;";
+    List<Ingredient> recipeIngredients = _db.Query<Ingredient>(sql, new { recipeId }).ToList();
+    return new List<Ingredient>(recipeIngredients);
+  }
+  internal Ingredient GetByIngredientId(int ingredientId)
+  {
+    string sql = @"
+  SELECT 
+  *
+  FROM ingredients
+  WHERE id = @ingredientId;
+    ";
+    Ingredient ingredient = _db.Query<Ingredient>(sql, new { ingredientId }).FirstOrDefault();
     return ingredient;
   }
   internal int DeleteIngredient(int ingredientId)

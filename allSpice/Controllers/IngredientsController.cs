@@ -36,7 +36,7 @@ public class IngredientsController : ControllerBase
     try
     {
       Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-      _ingredientsService.DeleteIngredient(ingredientId, userInfo.Id)
+      _ingredientsService.DeleteIngredient(ingredientId, userInfo.Id);
       return Ok("Ingredient Removed");
     }
     catch (Exception e)

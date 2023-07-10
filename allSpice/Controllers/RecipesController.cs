@@ -5,6 +5,7 @@ namespace allSpice.Controllers;
 public class RecipesController : ControllerBase
 {
   private readonly RecipesService _recipesService;
+  private readonly IngredientsService _ingredientsService;
   private readonly Auth0Provider _auth;
 
   public RecipesController(RecipesService recipesService, Auth0Provider auth)
@@ -84,6 +85,21 @@ public class RecipesController : ControllerBase
       _recipesService.DeleteRecipe(recipeId, userInfo.Id);
       // string message = _recipesService.ArchiveRecipe(recipeId);
       return Ok("Buh Bye");
+    }
+    catch (Exception e)
+    {
+      return BadRequest(e.Message);
+    }
+  }
+
+  // SECTION Ingredients
+  [HttpGet("{recipeId}/ingredients")]
+  public ActionResult<List<Ingredient>> GetIngredientsByRecipeId(int recipeId)
+  {
+    try
+    {
+      List<Ingredient> ingredients = _ingredientsService.GetIngredientByRecipeId(recipeId);
+      return Ok(ingredients);
     }
     catch (Exception e)
     {

@@ -27,8 +27,18 @@ CREATE TABLE
         name VARCHAR(255) NOT NULL,
         quantity VARCHAR(255) NOT NULL DEFAULT "1",
         recipeId INT NOT NULL,
-        FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE,
-        FOREIGN KEY (recipeId) REFERENCE recipes(id) ON DELETE CASCADE
+        -- creatorId VARCHAR(255) NOT NULL,
+        -- FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE,
+        FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
-DROP TABLE ingredients;
+CREATE TABLE
+    IF NOT EXISTS favorite(
+        id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+        accountId VARCHAR(255) NOT NULL,
+        recipeId INT NOT NULL,
+        Foreign Key (accountId) REFERENCES accounts(id) ON DELETE CASCADE,
+        Foreign Key (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
+    ) default charset utf8 COMMENT '';
+
+select LAST_INSERT_ID() from favorite;

@@ -25,14 +25,24 @@ public class IngredientsRepository
   internal List<Ingredient> GetIngredientsByRecipeId(int recipeId)
   {
     string sql = @"
-    SELECT
-    *
-    FROM ingredients
-    WHERE recipeId = @recipeId
-    ;";
-    List<Ingredient> recipeIngredients = _db.Query<Ingredient>(sql, new { recipeId }).ToList();
-    return new List<Ingredient>(recipeIngredients);
+    SELECT 
+    ing.*,
+    FROM ingredients ing
+    WHERE recipeId = @recipeId;
+    ";
+    List<Ingredient> ingredients = _db.Query<Ingredient>(sql, new { recipeId }).ToList();
+    return ingredients;
   }
+  // {
+  //   string sql = @"
+  //   SELECT
+  //   *
+  //   FROM ingredients
+  //   WHERE recipeId = @recipeId
+  //   ;";
+  //   List<Ingredient> recipeIngredients = _db.Query<Ingredient>(sql, new { recipeId }).ToList();
+  //   return new List<Ingredient>(recipeIngredients);
+  // }
   internal Ingredient GetByIngredientId(int ingredientId)
   {
     string sql = @"
@@ -54,4 +64,15 @@ public class IngredientsRepository
     int rows = _db.Execute(sql, new { ingredientId });
     return rows;
   }
+  // internal Ingredient GetIngById(int ingredientId)
+  // {
+  //   string sql = @"
+  //   SELECT
+  //   *
+  //   FROM ingredients
+  //   WHERE id = @ingredientId;
+  //   ";
+  //   Ingredient ingredient = _db.Query<Ingredient>(sql, new { ingredientId }).FirstOrDefault();
+  //   return ingredient;
+  // }
 }

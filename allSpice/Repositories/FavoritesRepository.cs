@@ -16,12 +16,11 @@ public class FavoritesRepository
     (accountId, recipeId)
     VALUES
     (@accountId, @recipeId)
-    SELECT 
-    *
-    FROM favorites 
-    WHERE id = LAST_INSERT_ID();
+    SELECT LAST_INSERT_Id();
     ";
-    Favorite favorite = _db.Query<Favorite>(sql, favoriteData).FirstOrDefault();
+    int lastInsertId = _db.ExecuteScalar<int>(sql, favoriteData);
+    favoriteData.id = lastInsertId;
+    // Favorite favorite = _db.Query<Favorite>(sql, favoriteData).FirstOrDefault();
     return favoriteData;
   }
 }

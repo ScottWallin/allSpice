@@ -9,8 +9,9 @@ public class FavoritesService
     _repo = repo;
     _recipesService = recipesService;
   }
-  internal int CreateFavorite(Favorite favoritesData)
+  internal Favorite CreateFavorite(Favorite favoritesData)
   {
-
+    Favorite newFavorite = _repo.CreateFavorite(favoritesData);
+    return newFavorite;
   }
 }

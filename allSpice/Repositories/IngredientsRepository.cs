@@ -26,9 +26,9 @@ public class IngredientsRepository
   {
     string sql = @"
     SELECT 
-    ing.*,
+    ing.*
     FROM ingredients ing
-    WHERE recipeId = @recipeId;
+    WHERE ing.recipeId = @recipeId;
     ";
     List<Ingredient> ingredients = _db.Query<Ingredient>(sql, new { recipeId }).ToList();
     return ingredients;

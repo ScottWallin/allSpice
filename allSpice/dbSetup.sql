@@ -35,7 +35,7 @@ CREATE TABLE
 DROP TABLE ingredients;
 
 CREATE TABLE
-    IF NOT EXISTS favorite(
+    IF NOT EXISTS favorites(
         id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
         accountId VARCHAR(255) NOT NULL,
         recipeId INT NOT NULL,
@@ -44,3 +44,5 @@ CREATE TABLE
     ) default charset utf8 COMMENT '';
 
 select LAST_INSERT_ID() from favorite;
+
+DROP TABLE favorites;
